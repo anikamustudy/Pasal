@@ -80,15 +80,17 @@ The API server will start at `http://localhost:3000`
 ```bash
 cd mobile
 npm install
-cp .env.example .env
-# Configure your API endpoint in .env
+# .env is pre-configured for Android emulator!
+# For other platforms, see ANDROID_EMULATOR_SETUP.md
 npm start
 ```
 
 Then:
-- Press `a` for Android emulator
-- Press `i` for iOS simulator
+- Press `a` for Android emulator (requires Android Studio)
+- Press `i` for iOS simulator (Mac only, requires Xcode)
 - Scan QR code with Expo Go app for physical device
+
+**Note:** For Android emulator setup, see [ANDROID_EMULATOR_SETUP.md](ANDROID_EMULATOR_SETUP.md)
 
 ## ✨ Features
 
