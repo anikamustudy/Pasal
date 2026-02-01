@@ -56,7 +56,7 @@ If you haven't installed Android Studio yet:
 1. Open Android Studio
 2. Go to **Settings/Preferences → Appearance & Behavior → System Settings → Android SDK**
 3. Install the following:
-   - **SDK Platforms**: Android 13.0 (Tiramisu) or Android 14.0 (UpsideDownCake)
+   - **SDK Platforms**: Android 13.0 (Tiramisu) or Android 14.0 (API 34)
    - **SDK Tools**: 
      - Android SDK Build-Tools
      - Android Emulator
