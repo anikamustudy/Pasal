@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, View, StyleSheet, StatusBar } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { ActivityIndicator, View, StyleSheet } from 'react-native';
 import AppNavigator from './src/navigation/AppNavigator';
 import { initDatabase } from './src/database';
 
@@ -32,7 +33,7 @@ export default function App() {
 
   return (
     <>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar style="auto" />
       <AppNavigator />
     </>
   );

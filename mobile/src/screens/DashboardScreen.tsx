@@ -9,7 +9,7 @@ import {
   RefreshControl,
   Alert,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 import { useAppStore } from '../store';
 import apiService from '../services/api';
 import { DashboardStats } from '../types';
@@ -66,32 +66,32 @@ const DashboardScreen = ({ navigation }: any) => {
             onPress={() => navigation.navigate('Settings')}
             style={styles.settingsButton}
           >
-            <Icon name="settings-outline" size={24} color="#333" />
+            <Ionicons name="settings-outline" size={24} color="#333" />
           </TouchableOpacity>
         </View>
 
         {/* Stats Cards */}
         <View style={styles.statsContainer}>
           <View style={[styles.statCard, { backgroundColor: '#4CAF50' }]}>
-            <Icon name="cart-outline" size={32} color="#fff" />
+            <Ionicons name="cart-outline" size={32} color="#fff" />
             <Text style={styles.statValue}>{stats.todaySales}</Text>
             <Text style={styles.statLabel}>Today's Sales</Text>
           </View>
 
           <View style={[styles.statCard, { backgroundColor: '#2196F3' }]}>
-            <Icon name="cash-outline" size={32} color="#fff" />
+            <Ionicons name="cash-outline" size={32} color="#fff" />
             <Text style={styles.statValue}>{formatCurrency(stats.todayRevenue)}</Text>
             <Text style={styles.statLabel}>Today's Revenue</Text>
           </View>
 
           <View style={[styles.statCard, { backgroundColor: '#FF9800' }]}>
-            <Icon name="alert-circle-outline" size={32} color="#fff" />
+            <Ionicons name="alert-circle-outline" size={32} color="#fff" />
             <Text style={styles.statValue}>{stats.lowStockCount}</Text>
             <Text style={styles.statLabel}>Low Stock Items</Text>
           </View>
 
           <View style={[styles.statCard, { backgroundColor: '#F44336' }]}>
-            <Icon name="book-outline" size={32} color="#fff" />
+            <Ionicons name="book-outline" size={32} color="#fff" />
             <Text style={styles.statValue}>{formatCurrency(stats.totalUdhar)}</Text>
             <Text style={styles.statLabel}>Total Udhar</Text>
           </View>
@@ -105,7 +105,7 @@ const DashboardScreen = ({ navigation }: any) => {
               style={styles.actionButton}
               onPress={() => navigation.navigate('Billing')}
             >
-              <Icon name="cart" size={28} color="#4CAF50" />
+              <Ionicons name="cart" size={28} color="#4CAF50" />
               <Text style={styles.actionText}>New Sale</Text>
             </TouchableOpacity>
 
@@ -113,7 +113,7 @@ const DashboardScreen = ({ navigation }: any) => {
               style={styles.actionButton}
               onPress={() => navigation.navigate('Products')}
             >
-              <Icon name="add-circle" size={28} color="#4CAF50" />
+              <Ionicons name="add-circle" size={28} color="#4CAF50" />
               <Text style={styles.actionText}>Add Product</Text>
             </TouchableOpacity>
 
@@ -121,7 +121,7 @@ const DashboardScreen = ({ navigation }: any) => {
               style={styles.actionButton}
               onPress={() => navigation.navigate('Udhar')}
             >
-              <Icon name="book" size={28} color="#4CAF50" />
+              <Ionicons name="book" size={28} color="#4CAF50" />
               <Text style={styles.actionText}>View Udhar</Text>
             </TouchableOpacity>
 
@@ -129,7 +129,7 @@ const DashboardScreen = ({ navigation }: any) => {
               style={styles.actionButton}
               onPress={() => navigation.navigate('Reports')}
             >
-              <Icon name="stats-chart" size={28} color="#4CAF50" />
+              <Ionicons name="stats-chart" size={28} color="#4CAF50" />
               <Text style={styles.actionText}>Reports</Text>
             </TouchableOpacity>
           </View>
@@ -139,7 +139,7 @@ const DashboardScreen = ({ navigation }: any) => {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Recent Activity</Text>
           <View style={styles.emptyState}>
-            <Icon name="time-outline" size={48} color="#ccc" />
+            <Ionicons name="time-outline" size={48} color="#ccc" />
             <Text style={styles.emptyText}>No recent activity</Text>
           </View>
         </View>

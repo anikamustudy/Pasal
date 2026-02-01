@@ -1,36 +1,17 @@
-import SQLite from 'react-native-sqlite-storage';
+import * as SQLite from 'expo-sqlite';
 import { Product, Sale, Customer, Supplier, UdharTransaction, StockTransaction } from '../types';
 
-// Enable promise API
-SQLite.enablePromise(true);
-
 // Open database
-let db: SQLite.SQLiteDatabase;
-
-/**
- * Open or create the database
- */
-const openDatabase = async (): Promise<SQLite.SQLiteDatabase> => {
-  if (db) {
-    return db;
-  }
-  db = await SQLite.openDatabase({
-    name: 'smartpasal.db',
-    location: 'default',
-  });
-  return db;
-};
+const db = SQLite.openDatabase('smartpasal.db');
 
 /**
  * Initialize database tables
  */
-export const initDatabase = async (): Promise<void> => {
-  try {
-    const database = await openDatabase();
-    
-    await database.transaction(async (tx) => {
+export const initDatabase = (): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    db.transaction(tx => {
       // Products table
-      await tx.executeSql(
+      tx.executeSql(
         `CREATE TABLE IF NOT EXISTS products (
           id TEXT PRIMARY KEY,
           shopId TEXT NOT NULL,
@@ -48,12 +29,14 @@ export const initDatabase = async (): Promise<void> => {
           updatedAt TEXT NOT NULL,
           syncedAt TEXT,
           isDeleted INTEGER DEFAULT 0
-        )`
+        )`,
+        [],
+        () => console.log('Products table created'),
+        (_, error) => { console.error('Error creating products table:', error); return false; }
       );
-      console.log('Products table created');
 
       // Sales table
-      await tx.executeSql(
+      tx.executeSql(
         `CREATE TABLE IF NOT EXISTS sales (
           id TEXT PRIMARY KEY,
           shopId TEXT NOT NULL,
@@ -73,11 +56,12 @@ export const initDatabase = async (): Promise<void> => {
           createdAt TEXT NOT NULL,
           updatedAt TEXT NOT NULL,
           syncedAt TEXT
-        )`
+        )`,
+        []
       );
 
       // Customers table
-      await tx.executeSql(
+      tx.executeSql(
         `CREATE TABLE IF NOT EXISTS customers (
           id TEXT PRIMARY KEY,
           shopId TEXT NOT NULL,
@@ -90,11 +74,12 @@ export const initDatabase = async (): Promise<void> => {
           updatedAt TEXT NOT NULL,
           syncedAt TEXT,
           isDeleted INTEGER DEFAULT 0
-        )`
+        )`,
+        []
       );
 
       // Suppliers table
-      await tx.executeSql(
+      tx.executeSql(
         `CREATE TABLE IF NOT EXISTS suppliers (
           id TEXT PRIMARY KEY,
           shopId TEXT NOT NULL,
@@ -108,11 +93,12 @@ export const initDatabase = async (): Promise<void> => {
           updatedAt TEXT NOT NULL,
           syncedAt TEXT,
           isDeleted INTEGER DEFAULT 0
-        )`
+        )`,
+        []
       );
 
       // Udhar transactions table
-      await tx.executeSql(
+      tx.executeSql(
         `CREATE TABLE IF NOT EXISTS udhar_transactions (
           id TEXT PRIMARY KEY,
           shopId TEXT NOT NULL,
@@ -126,11 +112,12 @@ export const initDatabase = async (): Promise<void> => {
           createdBy TEXT NOT NULL,
           createdAt TEXT NOT NULL,
           syncedAt TEXT
-        )`
+        )`,
+        []
       );
 
       // Stock transactions table
-      await tx.executeSql(
+      tx.executeSql(
         `CREATE TABLE IF NOT EXISTS stock_transactions (
           id TEXT PRIMARY KEY,
           shopId TEXT NOT NULL,
@@ -144,50 +131,59 @@ export const initDatabase = async (): Promise<void> => {
           createdBy TEXT NOT NULL,
           createdAt TEXT NOT NULL,
           syncedAt TEXT
-        )`
+        )`,
+        []
       );
 
       // App settings table
-      await tx.executeSql(
+      tx.executeSql(
         `CREATE TABLE IF NOT EXISTS app_settings (
           key TEXT PRIMARY KEY,
           value TEXT
-        )`
+        )`,
+        [],
+        () => {
+          console.log('Database initialized successfully');
+          resolve();
+        },
+        (_, error) => {
+          console.error('Error initializing database:', error);
+          reject(error);
+          return false;
+        }
       );
-      
-      console.log('Database initialized successfully');
     });
-  } catch (error) {
-    console.error('Error initializing database:', error);
-    throw error;
-  }
+  });
 };
 
 /**
  * Generic function to execute SQL queries
  */
-export const executeSql = async (
+export const executeSql = (
   sql: string,
   params: any[] = []
-): Promise<any> => {
-  try {
-    const database = await openDatabase();
-    const [result] = await database.executeSql(sql, params);
-    return result;
-  } catch (error) {
-    console.error('SQL execution error:', error);
-    throw error;
-  }
+): Promise<SQLite.SQLResultSet> => {
+  return new Promise((resolve, reject) => {
+    db.transaction(tx => {
+      tx.executeSql(
+        sql,
+        params,
+        (_, result) => resolve(result),
+        (_, error) => {
+          reject(error);
+          return false;
+        }
+      );
+    });
+  });
 };
 
 /**
  * Clear all data (for logout or reset)
  */
-export const clearAllData = async (): Promise<void> => {
-  try {
-    const database = await openDatabase();
-    
-    await database.transaction(async (tx) => {
+export const clearAllData = (): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    db.transaction(tx => {
       const tables = [
         'products',
         'sales',
@@ -197,18 +193,24 @@ export const clearAllData = async (): Promise<void> => {
         'stock_transactions',
       ];
 
-      for (const table of tables) {
-        await tx.executeSql(`DELETE FROM ${table}`);
-      }
+      tables.forEach(table => {
+        tx.executeSql(`DELETE FROM ${table}`, []);
+      });
 
-      await tx.executeSql(`DELETE FROM app_settings WHERE key != 'pin_code'`);
-      console.log('All data cleared');
+      tx.executeSql(
+        `DELETE FROM app_settings WHERE key != 'pin_code'`,
+        [],
+        () => {
+          console.log('All data cleared');
+          resolve();
+        },
+        (_, error) => {
+          reject(error);
+          return false;
+        }
+      );
     });
-  } catch (error) {
-    console.error('Error clearing data:', error);
-    throw error;
-  }
+  });
 };
 
-export { openDatabase };
-export default { openDatabase, initDatabase, executeSql, clearAllData };
+export default db;
