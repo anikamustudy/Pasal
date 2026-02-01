@@ -1,47 +1,4 @@
 {
-  "expo": {
-    "name": "Smart Pasal",
-    "slug": "smart-pasal",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.smartpasal.app",
-      "infoPlist": {
-        "NSCameraUsageDescription": "Allow Smart Pasal to use the camera for barcode scanning",
-        "NSFaceIDUsageDescription": "Allow Smart Pasal to use Face ID for secure authentication"
-      }
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.smartpasal.app",
-      "permissions": [
-        "CAMERA",
-        "USE_BIOMETRIC",
-        "USE_FINGERPRINT"
-      ]
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "plugins": [
-      "expo-sqlite",
-      "expo-barcode-scanner",
-      "expo-local-authentication",
-      "expo-secure-store"
-    ]
-  }
+  "name": "SmartPasal",
+  "displayName": "Smart Pasal"
 }

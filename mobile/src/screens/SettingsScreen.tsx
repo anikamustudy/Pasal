@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { useAppStore } from '../store';
 import { auth } from '../services/api';
 
@@ -36,7 +36,7 @@ const SettingsScreen = ({ navigation }: any) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={24} color="#333" />
+          <Icon name="arrow-back" size={24} color="#333" />
         </TouchableOpacity>
         <Text style={styles.title}>Settings</Text>
         <View style={{ width: 24 }} />
@@ -61,34 +61,34 @@ const SettingsScreen = ({ navigation }: any) => {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Account</Text>
         <TouchableOpacity style={styles.menuItem}>
-          <Ionicons name="person-outline" size={24} color="#333" />
+          <Icon name="person-outline" size={24} color="#333" />
           <Text style={styles.menuText}>Profile Settings</Text>
-          <Ionicons name="chevron-forward" size={24} color="#999" />
+          <Icon name="chevron-forward" size={24} color="#999" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.menuItem}>
-          <Ionicons name="lock-closed-outline" size={24} color="#333" />
+          <Icon name="lock-closed-outline" size={24} color="#333" />
           <Text style={styles.menuText}>Change PIN</Text>
-          <Ionicons name="chevron-forward" size={24} color="#999" />
+          <Icon name="chevron-forward" size={24} color="#999" />
         </TouchableOpacity>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Data</Text>
         <TouchableOpacity style={styles.menuItem}>
-          <Ionicons name="cloud-upload-outline" size={24} color="#333" />
+          <Icon name="cloud-upload-outline" size={24} color="#333" />
           <Text style={styles.menuText}>Sync Now</Text>
-          <Ionicons name="chevron-forward" size={24} color="#999" />
+          <Icon name="chevron-forward" size={24} color="#999" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.menuItem}>
-          <Ionicons name="save-outline" size={24} color="#333" />
+          <Icon name="save-outline" size={24} color="#333" />
           <Text style={styles.menuText}>Backup Data</Text>
-          <Ionicons name="chevron-forward" size={24} color="#999" />
+          <Icon name="chevron-forward" size={24} color="#999" />
         </TouchableOpacity>
       </View>
 
       <View style={styles.section}>
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-          <Ionicons name="log-out-outline" size={24} color="#F44336" />
+          <Icon name="log-out-outline" size={24} color="#F44336" />
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
       </View>
