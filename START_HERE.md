@@ -11,6 +11,11 @@ Choose your path based on what you want to do:
 
 Quick guide to get both backend and mobile app running on your machine in 15 minutes.
 
+### 📱 I Want to Run on Android Emulator
+**→ Read: [ANDROID_EMULATOR_SETUP.md](ANDROID_EMULATOR_SETUP.md)**
+
+Complete guide for running the mobile app on Android Studio Emulator. Pre-configured and ready to go!
+
 ### 📚 I Want to Understand the Project First
 **→ Read: [README.md](README.md)** then **[PROJECT_SUMMARY.md](PROJECT_SUMMARY.md)**
 
@@ -82,6 +87,7 @@ Detailed report covering:
 |------|-----------------|--------------|
 | [README.md](README.md) | Project overview | Start here |
 | [QUICKSTART.md](QUICKSTART.md) | 15-min setup guide | Want to run it now |
+| [ANDROID_EMULATOR_SETUP.md](ANDROID_EMULATOR_SETUP.md) | Android emulator setup | Running on Android |
 | [PROJECT_SUMMARY.md](PROJECT_SUMMARY.md) | Complete project status | Want full overview |
 | [IMPLEMENTATION_REPORT.md](IMPLEMENTATION_REPORT.md) | Build report | Want to know what's done |
 | [docs/API.md](docs/API.md) | API reference | Building or using API |
