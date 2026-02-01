@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import { AuthRequest } from '../middleware/auth';
 import { db } from '../config/firebase';
-import { Shop, User } from '../types';
+import { Shop } from '../types';
 
 /**
  * Create or update shop profile

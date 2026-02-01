@@ -9,7 +9,7 @@ import { SyncData } from '../types';
  */
 export const syncToCloud = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
-    const { shopId } = req.params;
+    // const { shopId } = req.params; // Not used for validation, data includes shopId
     const syncData: Partial<SyncData> = req.body;
 
     const batch = db.batch();

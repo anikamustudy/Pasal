@@ -31,7 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan(config.nodeEnv === 'development' ? 'dev' : 'combined')); // Logging
 
 // Health check endpoint
-app.get('/health', (req, res) => {
+app.get('/health', (_req, res) => {
   res.json({
     success: true,
     message: 'Smart Pasal API is running',
