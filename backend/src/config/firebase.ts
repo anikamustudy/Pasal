@@ -14,8 +14,11 @@ const initializeFirebase = () => {
       admin.initializeApp({
         credential: admin.credential.cert(serviceAccount),
       });
-    } else if (process.env.FIREBASE_PROJECT_ID) {
-      // Initialize with environment variables
+    } else if (process.env.FIREBASE_PROJECT_ID && 
+               process.env.FIREBASE_PROJECT_ID !== 'your-project-id' &&
+               process.env.FIREBASE_PRIVATE_KEY && 
+               process.env.FIREBASE_PRIVATE_KEY !== 'your-private-key') {
+      // Initialize with environment variables (only if they are properly configured)
       admin.initializeApp({
         credential: admin.credential.cert({
           projectId: process.env.FIREBASE_PROJECT_ID,
@@ -24,15 +27,19 @@ const initializeFirebase = () => {
         }),
       });
     } else {
-      console.warn('Firebase not configured. Running in local mode.');
+      console.warn('⚠️  Firebase not configured. Running in development/demo mode.');
+      console.warn('⚠️  Firebase features (auth, cloud storage) will not be available.');
+      // Return a mock admin instance for development
+      return null;
     }
   }
   return admin;
 };
 
-export const firebaseAdmin = initializeFirebase();
-export const db = firebaseAdmin.firestore();
-export const auth = firebaseAdmin.auth();
+const firebaseInstance = initializeFirebase();
+export const firebaseAdmin = firebaseInstance;
+export const db = firebaseInstance ? firebaseInstance.firestore() : null;
+export const auth = firebaseInstance ? firebaseInstance.auth() : null;
 
 // App Configuration
 export const config = {
