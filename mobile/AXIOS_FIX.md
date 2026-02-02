@@ -23,28 +23,39 @@ Metro's default module resolution was not properly handling these conditional ex
 
 ## Solution
 
-Created a `metro.config.js` file that configures Metro's resolver to prioritize the `browser` field in package.json files:
+Created a `metro.config.js` file that configures Metro's resolver to prioritize the `browser` field in package.json files and enable support for the modern "exports" field:
 
 ```javascript
 const { getDefaultConfig } = require('expo/metro-config');
 
 const config = getDefaultConfig(__dirname);
 
-// Configure resolver to prioritize browser field in package.json
+// Configure resolver to prioritize browser/react-native field in package.json
 config.resolver.resolverMainFields = ['react-native', 'browser', 'main'];
+
+// Support for package exports field (used by axios 1.6+)
+config.resolver.unstable_enablePackageExports = true;
+
+// Explicitly configure source extensions for better module resolution
+config.resolver.sourceExts = [...config.resolver.sourceExts, 'cjs'];
 
 module.exports = config;
 ```
 
 ### How It Works
 
-The `resolverMainFields` option tells Metro which fields to check in a package's `package.json` when resolving imports:
+The configuration has three key parts:
 
-1. **`react-native`** - Check for React Native-specific builds first
-2. **`browser`** - Check for browser-compatible builds (like Axios browser version)
-3. **`main`** - Fallback to the default main entry point
+1. **`resolverMainFields`** - Tells Metro which fields to check in a package's `package.json` when resolving imports:
+   - **`react-native`** - Check for React Native-specific builds first
+   - **`browser`** - Check for browser-compatible builds (like Axios browser version)
+   - **`main`** - Fallback to the default main entry point
 
-By prioritizing `browser` before `main`, Metro will use Axios's browser build instead of the Node.js build.
+2. **`unstable_enablePackageExports`** - Enables support for the modern "exports" field in package.json (used by Axios 1.6+). This allows Metro to properly resolve conditional exports based on the environment (react-native, browser, node).
+
+3. **`sourceExts`** - Adds `.cjs` extension to ensure CommonJS modules (like `axios/dist/browser/axios.cjs`) can be properly resolved.
+
+By combining these configurations, Metro will use Axios's react-native/browser build instead of the Node.js build.
 
 ## Why This Is the Right Solution
 

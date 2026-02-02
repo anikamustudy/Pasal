@@ -18,9 +18,15 @@ const { getDefaultConfig } = require('expo/metro-config');
 
 const config = getDefaultConfig(__dirname);
 
-// Configure resolver to prioritize browser field in package.json
+// Configure resolver to prioritize browser/react-native field in package.json
 // This ensures axios uses its browser build instead of the Node.js build
 config.resolver.resolverMainFields = ['react-native', 'browser', 'main'];
+
+// Support for package exports field (used by axios 1.6+)
+config.resolver.unstable_enablePackageExports = true;
+
+// Explicitly configure source extensions for better module resolution
+config.resolver.sourceExts = [...config.resolver.sourceExts, 'cjs'];
 
 module.exports = config;
 ```
@@ -31,8 +37,10 @@ This configuration tells Metro bundler to:
 1. First check for `react-native` field in package.json
 2. Then check for `browser` field (which Axios provides)
 3. Finally fallback to `main` field
+4. **Enable support for the modern "exports" field** used by Axios 1.6+
+5. Support `.cjs` (CommonJS) file extensions for proper module resolution
 
-This ensures Axios uses its **browser-compatible build** instead of the Node.js build.
+This ensures Axios uses its **react-native/browser-compatible build** instead of the Node.js build.
 
 ## Why This Is the Correct Fix
 
