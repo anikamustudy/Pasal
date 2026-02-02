@@ -9,6 +9,17 @@ import { SyncData } from '../types';
  */
 export const syncToCloud = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
+    // Check if Firebase is configured
+    if (!db) {
+      console.warn('Sync skipped: Firebase not configured (running in demo mode)');
+      res.json({
+        success: true,
+        message: 'Data saved locally (Firebase sync skipped in demo mode)',
+        syncedAt: new Date(),
+      });
+      return;
+    }
+
     // const { shopId } = req.params; // Not used for validation, data includes shopId
     const syncData: Partial<SyncData> = req.body;
 
@@ -85,6 +96,24 @@ export const syncToCloud = async (req: AuthRequest, res: Response): Promise<void
  */
 export const syncFromCloud = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
+    // Check if Firebase is configured
+    if (!db) {
+      console.warn('Sync skipped: Firebase not configured (running in demo mode)');
+      res.json({
+        success: true,
+        data: {
+          lastSyncTimestamp: new Date(),
+          products: [],
+          sales: [],
+          customers: [],
+          suppliers: [],
+          udharTransactions: [],
+          stockTransactions: [],
+        },
+      });
+      return;
+    }
+
     const { shopId } = req.params;
     const { lastSyncTimestamp } = req.query;
 
@@ -180,6 +209,16 @@ export const syncFromCloud = async (req: AuthRequest, res: Response): Promise<vo
  */
 export const getLastSyncTimestamp = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
+    // Check if Firebase is configured
+    if (!db) {
+      console.warn('Sync skipped: Firebase not configured (running in demo mode)');
+      res.json({
+        success: true,
+        data: { lastSyncTimestamp: new Date(0) },
+      });
+      return;
+    }
+
     const { shopId } = req.params;
 
     // Get the most recent update timestamp from any collection
