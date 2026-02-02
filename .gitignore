@@ -56,3 +56,7 @@ temp/
 *.db
 *.sqlite
 *.sqlite3
+
+# Test outputs
+.test-export-output/
+.test-export.log
